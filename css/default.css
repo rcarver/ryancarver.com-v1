@@ -5,6 +5,14 @@ body {
   background-color: #08131a;
 }
 
+#header {
+  visibility: hidden;
+}
+.wf-active #header,
+.wf-inactive #header {
+  visibility: visible;
+}
+
 div.null {
   clear: both;
   height: 1px;
@@ -76,7 +84,7 @@ h1 span {
 }
 
 #image .grid:hover img {
-  opacity: .8;
+/*  opacity: .2;*/
 }
 #image .grid img:hover {
   opacity: 1;
