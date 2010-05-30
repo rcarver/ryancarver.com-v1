@@ -4,8 +4,20 @@ layout: default
 
 <div id="image">
   <div class="grid">
-    {% for post in site.posts %}
-      <a class="a" href="{{post.url}}"><img src="/photos/thumb/{{post.thumb}}" width="240" height="240"></a>
+    {% for post in paginator.posts %}
+      {% if forloop.index < 4 %}
+        {% assign class = "a" %}
+      {% endif %}
+      {% if forloop.index == 4 %}
+        {% assign class = "a r" %}
+      {% endif %}
+      {% if forloop.index > 4 %}
+        {% assign class = "b" %}
+      {% endif %}
+      {% if forloop.index == 8 %}
+        {% assign class = "b r" %}
+      {% endif %}
+      <a class="{{class}}" href="{{post.url}}"><img src="/photos/thumb/{{post.thumb}}" width="240" height="240"></a>
     {% endfor %}
   </div>
 </div>
