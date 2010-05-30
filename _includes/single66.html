@@ -1,0 +1,8 @@
+<div class="single single66">
+  {% if page.images[0].alt %}
+    {% assign alt = page.images[0].alt %}
+  {% else %}
+    {% assign alt = 'Untitled' %}
+  {% endif %}
+  <img src="/photos/full/{{page.images[0].src}}" width="510" height="510" alt="{{alt}}">
+</div>

@@ -1,0 +1,179 @@
+body {
+  font: normal 62.5%/1 "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Georgia", "Times New Roman", serif;
+  margin: 0;
+  padding: 0;
+  background-color: #08131a;
+}
+
+div.null {
+  clear: both;
+  height: 1px;
+}
+
+img {
+  border: 0;
+}
+
+#wrapper {
+/*  background-image: url(../images/grid.png);*/
+  margin: 0 auto;
+  width: 1110px;
+}
+
+#header {
+  margin-top: 15px;
+  padding-top: 30px;
+}
+h1 {
+  text-align: center;
+  font-weight: 100;
+  font-size: 32px;
+  line-height: 1.1;
+  text-indent: -10px;
+  margin: 0;
+  margin-bottom: 55px;
+}
+h1 a {
+  color: #8c9b9f;
+  text-decoration: none;
+}
+h1 span {
+  color: #5b5f61;
+}
+
+#image {
+  margin: 0 auto;
+  width: 1060px;
+  height: 520px;
+  margin-top: -5px;
+/*  background-color: #ddd;*/
+  text-align: center;
+}
+
+#image .frame .single img,
+#image .frame .double img {
+  border: 5px solid #fff;
+}
+
+#image .double img.a {
+  margin-right: 18px;
+}
+
+#image .grid {
+  padding: 5px;
+}
+
+#image .grid a {
+  display: inline-block;
+  margin-right: 28px;
+  margin-bottom: 30px;
+}
+#image .grid a.r {
+  margin-right: 0;
+}
+#image .grid a.b {
+  margin-bottom: 0;
+}
+
+#image .grid:hover img {
+  opacity: .2;
+}
+#image .grid img:hover {
+  opacity: 1;
+}
+
+#image .nav {
+  text-align: center;
+  padding-top: 12px;
+  width: 300px;
+  margin: 0 auto;
+  padding-right: 20px;
+/*  background-color: #eee;*/
+}
+
+#image .nav a,
+#image .nav span {
+  color: #b6b9ba;
+  font-style: italic;
+  font-size: 13px;
+  text-decoration: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 23px;
+/*  background-color: #eee;*/
+}
+
+#image .nav a:hover {
+  color: #fff;
+}
+
+#image .nav .dim {
+  opacity: .5;
+}
+
+#image .nav .prev {
+  background-image: url(../images/arrow-left.gif);
+  padding-left: 20px;
+}
+
+#image .nav .home {
+  margin-left: 17px;
+  margin-right: 17px;
+  width: 16px;
+  text-indent: -6000px;
+  background-image: url(../images/arrow-middle.gif);
+  background-position: 0 2px;
+}
+
+#image .nav .next {
+  background-image: url(../images/arrow-right.gif);
+  background-position: right 0;
+  padding-right: 19px;
+}
+
+#content {
+  color: #808f93;
+  width: 1050px;
+  margin: 0 auto;
+  padding-top: 70px;
+}
+
+#content a {
+  color: #a7b6ba;
+  text-decoration: none;
+}
+
+#content a:hover {
+  color: #fff;
+}
+
+#content dl {
+  margin: 0;
+  padding: 0;
+/*  background-color: #fff;*/
+}
+
+#content dt {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  float: left;
+  width: 510px;
+  text-align: right;
+  clear: both;
+}
+#content dd {
+  width: 255px;
+  font-size: 12px;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+  margin-left: 540px;
+}
+#content p {
+  margin: 0 0 20px 0;
+  padding: 0;
+  line-height: 20px;
+}

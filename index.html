@@ -1,0 +1,7 @@
+---
+layout: default
+---
+
+{% for post in site.posts %}
+  <a href="{{post.url}}"><img src="/photos/grid/{{post.thumb}}"></a>
+{% endfor %}
