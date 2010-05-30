@@ -1,3 +1,4 @@
 markdown: rdiscount
 auto: true
-permalink: /:categories/:title.html
+permalink: /:categories/:year-:month-:day.html
+paginate: 8

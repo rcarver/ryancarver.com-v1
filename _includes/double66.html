@@ -1,15 +1,17 @@
-<div class="double double66">
-  {% if page.images[0].alt %}
-    {% assign alt = page.images[0].alt %}
-  {% else %}
-    {% assign alt = 'Untitled' %}
-  {% endif %}
-  <img src="/photos/full/{{page.images[0].src}}" width="510" height="510" alt="{{alt}}">
+<div class="frame">
+  <div class="double double66">
+    {% if page.images[0].alt %}
+      {% assign alt = page.images[0].alt %}
+    {% else %}
+      {% assign alt = 'Untitled' %}
+    {% endif %}
+    <img class="a" src="/photos/full/{{page.images[0].src}}" width="510" height="510" alt="{{alt}}">
 
-  {% if page.images[1].alt %}
-    {% assign alt = page.images[1].alt %}
-  {% else %}
-    {% assign alt = 'Untitled' %}
-  {% endif %}
-  <img src="/photos/full/{{page.images[1].src}}" width="510" height="510" alt="{{alt}}">
+    {% if page.images[1].alt %}
+      {% assign alt = page.images[1].alt %}
+    {% else %}
+      {% assign alt = 'Untitled' %}
+    {% endif %}
+    <img class="b" src="/photos/full/{{page.images[1].src}}" width="510" height="510" alt="{{alt}}">
+  </div>
 </div>
