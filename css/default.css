@@ -5,11 +5,14 @@ body {
   background-color: #08131a;
 }
 
-#header {
+#header,
+#content {
   visibility: hidden;
 }
 .wf-active #header,
-.wf-inactive #header {
+.wf-inactive #header,
+.wf-active #content,
+.wf-inactive #content {
   visibility: visible;
 }
 
@@ -50,12 +53,13 @@ h1 span {
 }
 
 #image {
+  font-family: sans-serif; /* avoid layout shifting from font loading */
   margin: 0 auto;
   width: 1060px;
   height: 520px;
   margin-top: -5px;
-/*  background-color: #ddd;*/
   text-align: center;
+/*  background-color: #ddd;*/
 }
 
 #image .frame .single img,
@@ -73,7 +77,7 @@ h1 span {
 
 #image .grid a {
   display: inline-block;
-  margin-right: 28px;
+  margin-right: 27px;
   margin-bottom: 30px;
 }
 #image .grid a.r {
