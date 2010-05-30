@@ -1,4 +1,4 @@
 markdown: rdiscount
 auto: true
-permalink: /:categories/:year.:month.:day
+permalink: /photos/:year.:month.:day
 paginate: 8
