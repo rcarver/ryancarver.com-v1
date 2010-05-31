@@ -16,6 +16,8 @@ $(function() {
   $('#website').kern({
     'We': -50,
   }, 1000);
+
+  // $('#wrapper').addClass('grid');
 });
 
 $.fn.kern = function(pairs, emSize) {

@@ -28,15 +28,14 @@ img {
 }
 
 #wrapper {
-/*  background-image: url(../images/grid.png);*/
   margin: 0 auto;
   width: 1110px;
 }
+#wrapper.grid {
+  background-image: url(../images/grid.png);
+}
 
 #header {
-
-
-
   margin-top: 15px;
   padding-top: 30px;
 }
@@ -182,14 +181,17 @@ h1 span {
 }
 #content dd {
   width: 255px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 100;
   margin: 0;
   padding: 0;
   margin-left: 540px;
 }
 #content p {
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
   padding: 0;
   line-height: 20px;
+}
+#copyright p {
+  font-size: 11px;
 }
