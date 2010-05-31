@@ -1,18 +1,16 @@
 body {
-  font: normal 62.5%/1 "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Georgia", "Times New Roman", serif;
+  font: normal 62.5%/1 "Georgia", "Times New Roman", serif;
   margin: 0;
   padding: 0;
   background-color: #08131a;
 }
 
-#header,
-#content {
+.typeset {
+  font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Georgia", "Times New Roman", serif;
   visibility: hidden;
 }
-.wf-active #header,
-.wf-inactive #header,
-.wf-active #content,
-.wf-inactive #content {
+.wf-active .typeset,
+.wf-inactive .typeset {
   visibility: visible;
 }
 
@@ -53,9 +51,7 @@ h1 span {
 }
 
 #image {
-  font-family: sans-serif; /* avoid layout shifting from font loading */
   margin: 0 auto;
-  width: 1060px;
   height: 520px;
   margin-top: -5px;
   text-align: center;
