@@ -7,6 +7,10 @@ body {
 
 .typeset {
   font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Georgia", "Times New Roman", serif;
+/*  text-rendering: geometricPrecision;*/
+/*  -webkit-font-smoothing: subpixel-antialiased;*/
+/*  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;*/
+/*  -webkit-text-stroke: 1px transparent;*/
   visibility: hidden;
 }
 .wf-active .typeset,
@@ -30,6 +34,9 @@ img {
 }
 
 #header {
+
+
+
   margin-top: 15px;
   padding-top: 30px;
 }
@@ -171,6 +178,7 @@ h1 span {
   width: 510px;
   text-align: right;
   clear: both;
+  letter-spacing: 0.03em;
 }
 #content dd {
   width: 255px;
