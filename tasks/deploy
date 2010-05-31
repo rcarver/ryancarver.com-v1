@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-rm -rf _site && jekyll --no-auto && rsync -avz --delete --exclude=projects --dry-run _site/ ryancarver.com:ryancarver.com
