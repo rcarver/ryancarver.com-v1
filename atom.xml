@@ -17,7 +17,7 @@
      <title>{{ post.date | date: "%Y.%m.%d" }}</title>
      <link href="http://ryancarver.com{{ post.url }}"/>
      <updated>{{ post.date | date_to_xmlschema }}</updated>
-     <id>id:{{ post.id }}</id>
+     <id>{{post.url}}</id>
      <content type="html">
        &lt;p&gt;
         &lt;img src="http://ryancarver.com/photos/thumb/{{post.thumb}}"&gt;
