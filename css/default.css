@@ -181,12 +181,14 @@ h1 span {
   letter-spacing: 0.03em;
 }
 #content dd {
-  width: 255px;
+  width: 270px;
   font-size: 13px;
   font-weight: 100;
   margin: 0;
   padding: 0;
   margin-left: 540px;
+/*  word-spacing: 0.1em;*/
+/*  background-color: #fff;*/
 }
 #content p {
   margin: 0 0 15px 0;
