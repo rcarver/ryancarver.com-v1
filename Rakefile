@@ -18,3 +18,11 @@ desc "Run the development server"
 task :server do
   system "jekyll --server"
 end
+
+desc "Create a new post"
+task :post do
+  date = Time.now.strftime("%Y-%m-%d")
+  file = "_posts/#{date}-x.html"
+  FileUtils.touch(file)
+  `mate #{file}`
+end
