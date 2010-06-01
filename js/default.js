@@ -1,5 +1,5 @@
 $(function() {
-  var $images = $('.grid img').hover(
+  var $images = $('.highlight-grid img').hover(
     function() {
       var $this = $(this);
       $images.clearQueue('fx');

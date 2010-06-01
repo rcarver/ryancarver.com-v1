@@ -58,7 +58,6 @@ h1 span {
 
 #image {
   margin: 0 auto;
-  height: 520px;
   margin-top: -5px;
   text-align: center;
 /*  background-color: #ddd;*/
@@ -75,6 +74,7 @@ h1 span {
 
 #image .grid {
   padding: 5px;
+  text-align: right;
 }
 
 #image .grid a {
@@ -150,7 +150,8 @@ h1 span {
   color: #808f93;
   width: 1050px;
   margin: 0 auto;
-  padding-top: 70px;
+  padding-top: 34px;
+/*  background-color: #fff;*/
 }
 
 #content a {
