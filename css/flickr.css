@@ -108,22 +108,37 @@ body {
 
 header h1 {
   font-size: 30px;
+  font-weight: normal;
+  margin: 10px 0 20px 10px;
   line-height: 1;
 }
-#container {
-  margin: 10px;
+
+#main {
+  margin-top: 20px;
 }
 
-
-#grid div.photo {
-  float: left;
+#grid {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-#grid .current {
-  border: 1px solid #fff;
+#grid table td {
+  padding: 0 20px;
+  vertical-align: middle;
+}
+#grid img {
+  border: 5px solid #bbb;
+  opacity: .7;
+}
+#grid .current img {
+  border-color: #fff;
+  opacity: 1;
 }
 
 #single {
-  clear: both;
+  position: fixed;
+  top: 10px;
+  left: 10px;
 }
 
 

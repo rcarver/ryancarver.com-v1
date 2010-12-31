@@ -39,11 +39,11 @@ $(function() {
 var Photo = Backbone.Model.extend({
   getLargeUrl: function() {
     var item = this.get('item');
-    return item.media.m.replace(/m\.jpg$/, 'z.jpg');
+    return item.media.m.replace(/m\.jpg$/, 'm.jpg');
   },
   getSmallUrl: function() {
     var item = this.get('item');
-    return item.media.m;
+    return item.media.m.replace(/m\.jpg$/, 'z.jpg');
   }
 });
 
@@ -60,7 +60,7 @@ var PhotoSet = Backbone.Collection.extend({
     return 'http://api.flickr.com/services/feeds/photos_public.gne?id=' + this.flickrId + '&tags=' + this.flickrTags.join(',') + '&format=json&jsoncallback=?';
   },
   parse: function(response) {
-    return _.first(response.items, 3).map(function(item) {
+    return _.map(response.items, function(item) {
       return { item: item };
     });
   }
@@ -196,11 +196,23 @@ var GalleryGridView = Backbone.View.extend({
     $(el).html('');
     var photos = this.model.getPhotos();
     var currentIndex = this.model.get('index');
+    var table = $('<table><tr/></table>').appendTo(el);
     _.each(photos, function(photo, index) {
       var current = index == currentIndex;
-      var view = new PhotoView({ model: photo, size: 'small', current: current });
-      $(view.render().el).appendTo(el);
+      var url = photo.getSmallUrl();
+      var img = $('<img/>').attr('src', url);
+      var cell = $('<td/>').append(img);
+      table.append(cell);
+      if (current) {
+        cell.addClass('current');
+      }
     });
+    // Scroll to the current image.
+    var cell = table.find('td img').eq(currentIndex);
+    var left = cell.offset().left;
+    var width = cell.outerWidth();
+    var windowWidth = document.body.clientWidth;
+    $('body').animate({ scrollLeft: left + (width / 2) - (windowWidth / 2) }, 500);
   },
 
   showPhoto: function(e) {
