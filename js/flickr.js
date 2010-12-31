@@ -22,6 +22,8 @@ $(function() {
   var single = new GallerySingleView({ model: gallery, el: '#main #single' });
   var controller = new GalleryController(gallery);
 
+  new GalleryScrollView({ model: gallery, el: '#main #grid' });
+
   photoSet.fetch({
     success: function() {
       controller.start();
@@ -207,17 +209,62 @@ var GalleryGridView = Backbone.View.extend({
         cell.addClass('current');
       }
     });
-    // Scroll to the current image.
-    var cell = table.find('td img').eq(currentIndex);
-    var left = cell.offset().left;
-    var width = cell.outerWidth();
-    var windowWidth = document.body.clientWidth;
-    $('body').animate({ scrollLeft: left + (width / 2) - (windowWidth / 2) }, 500);
   },
 
   showPhoto: function(e) {
     // TODO: set the real index based on the clicked element.
     this.model.set({ index: 2, view: true });
+  }
+});
+
+/*
+* A view representing the gallery as a whole.
+*/
+var GalleryScrollView = Backbone.View.extend({
+
+  initialize: function() {
+    _.bindAll(this, "render", "setImageViaScroll");
+    this.model.bind('change', this.render);
+    this.animating = false;
+    $(window).scroll(this.setImageViaScroll);
+  },
+
+  render: function() {
+    if (this.animating) {
+      $('body').stop(true);
+    }
+    this.animating = true;
+    var self = this;
+    var el = $(this.el);
+    var currentIndex = this.model.get('index');
+    var img = el.find('img').eq(currentIndex);
+    var left = img.offset().left;
+    var width = img.outerWidth();
+    var windowWidth = $('body').width();
+    $('body').animate({ scrollLeft: left + (width / 2) - (windowWidth / 2) }, 500, function() {
+      self.animating = false;
+    });
+  },
+
+  setImageViaScroll: function() {
+    if (!this.animating) {
+      var scrollPosition = $('body').scrollLeft();
+      var windowWidth = $('body').width();
+      var center = scrollPosition + (windowWidth / 2);
+      var el = $(this.el);
+      var model = this.model;
+      var currentIndex = this.model.get('index');
+      _.each(el.find('img'), function(e, index) {
+        if (index != currentIndex) {
+          var img = $(e);
+          var left = img.offset().left;
+          var width = img.outerWidth();
+          if (center > left && center < left + width) {
+            model.set({ index: index });
+          }
+        }
+      });
+    }
   }
 });
 
