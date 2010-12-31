@@ -41,7 +41,7 @@ $(function() {
 var Photo = Backbone.Model.extend({
   getLargeUrl: function() {
     var item = this.get('item');
-    return item.media.m.replace(/m\.jpg$/, 'm.jpg');
+    return item.media.m.replace(/m\.jpg$/, 'b.jpg');
   },
   getSmallUrl: function() {
     var item = this.get('item');

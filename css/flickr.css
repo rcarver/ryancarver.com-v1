@@ -110,17 +110,20 @@ header h1 {
   font-size: 30px;
   font-weight: normal;
   margin: 10px 0 20px 10px;
-  line-height: 1;
 }
 
 #main {
-  margin-top: 20px;
 }
 
 #grid {
-  position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
+  width: 100%;
+}
+#grid table {
+  display: table-cell;
+  vertical-align: middle;
 }
 #grid table td {
   padding: 0 20px;
@@ -136,9 +139,22 @@ header h1 {
 }
 
 #single {
+  display: table;
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(8, 19, 26, 0.8);
+}
+#single .photo {
+  display: table-cell;
+  vertical-align: middle;
+}
+#single .photo img {
+  display: block;
+  margin: 0 auto;
+  border: 10px solid #fff;
 }
 
 
