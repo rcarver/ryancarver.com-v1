@@ -71,8 +71,7 @@ var PhotoSet = Backbone.Collection.extend({
 */
 var Gallery = Backbone.Model.extend({
   initialize: function() {
-    this.set({ index: -1 });
-    this.set({ view: false });
+    this.set({ index: 0, view: false });
   },
   getPhoto: function() {
     return this.get('photoSet').at(this.get('index'));
@@ -195,8 +194,11 @@ var GalleryGridView = Backbone.View.extend({
   render: function() {
     var el = this.el;
     $(el).html('');
-    _.each(this.model.getPhotos(), function(photo) {
-      var view = new PhotoView({ model: photo, size: 'small' });
+    var photos = this.model.getPhotos();
+    var currentIndex = this.model.get('index');
+    _.each(photos, function(photo, index) {
+      var current = index == currentIndex;
+      var view = new PhotoView({ model: photo, size: 'small', current: current });
       $(view.render().el).appendTo(el);
     });
   },
@@ -216,7 +218,8 @@ var PhotoView = Backbone.View.extend({
   className: 'photo',
 
   initialize: function() {
-    this.size = this.options.size || 'small'
+    this.size = this.options.size || 'small';
+    this.current = this.options.current;
     _.bindAll(this, "render");
     this.model.bind('change', this.render);
   },
@@ -227,7 +230,10 @@ var PhotoView = Backbone.View.extend({
     } else {
       var url = this.model.getSmallUrl();
     }
-    $('<img/>').attr('src', url).appendTo(this.el);
+    var img = $('<img/>').attr('src', url).appendTo(this.el);
+    if (this.current) {
+      img.addClass('current');
+    }
     return this;
   }
 });

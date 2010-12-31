@@ -118,6 +118,9 @@ header h1 {
 #grid div.photo {
   float: left;
 }
+#grid .current {
+  border: 1px solid #fff;
+}
 
 #single {
   clear: both;
