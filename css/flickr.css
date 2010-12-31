@@ -86,12 +86,42 @@ button {  width: auto; overflow: visible; }
     Author:
  */
 
+body {
+  font: normal 62.5%/1 "Georgia", "Times New Roman", serif;
+  margin: 0;
+  padding: 0;
+  background-color: #08131a;
+}
+
+.typeset {
+  font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Georgia", "Times New Roman", serif;
+/*  text-rendering: geometricPrecision;*/
+/*  -webkit-font-smoothing: subpixel-antialiased;*/
+/*  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;*/
+/*  -webkit-text-stroke: 1px transparent;*/
+  visibility: hidden;
+}
+.wf-active .typeset,
+.wf-inactive .typeset {
+  visibility: visible;
+}
+
+header h1 {
+  font-size: 30px;
+  line-height: 1;
+}
+#container {
+  margin: 10px;
+}
 
 
+#grid div.photo {
+  float: left;
+}
 
-
-
-
+#single {
+  clear: both;
+}
 
 
 
