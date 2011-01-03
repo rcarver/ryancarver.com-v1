@@ -93,9 +93,11 @@ h1 span {
   left: 0;
 }
 
+#gallery td {
+  opacity: .2;
+  -webkit-transition: opacity .5s ease-out;
+}
 #gallery td.current {
   opacity: 1;
 }
-#gallery td {
-  opacity: .2;
-}
+
