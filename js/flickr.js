@@ -253,7 +253,7 @@ var GalleryLayout = Backbone.View.extend({
 var GalleryInteration = Backbone.View.extend({
 
   events: {
-    'click': "changePhoto"
+    'click .wrapper': "changePhoto"
   },
 
   initialize: function() {
@@ -264,6 +264,7 @@ var GalleryInteration = Backbone.View.extend({
 
   render: function() {
     var index = this.model.get('index');
+    var prevIndex = this.model.previous('index');
     var img = this.$('img').eq(index);
 
     this.$('td').removeClass('current');
@@ -275,8 +276,10 @@ var GalleryInteration = Backbone.View.extend({
         if (this.animating) {
           this.el.stop(true);
         }
+        var time = Math.min(1800, 400 + 100 * Math.abs(index - prevIndex));
+        console.log(time);
         this.animating = true;
-        this.el.animate({ scrollLeft: position }, 500, this.finishAnimating);
+        this.el.animate({ scrollLeft: position }, time, this.finishAnimating);
       } else {
         this.el.scrollLeft(position);
       }
@@ -292,11 +295,15 @@ var GalleryInteration = Backbone.View.extend({
   },
 
   changePhoto: function(e) {
-    var width = this.el.width();
-    if (e.clientX > width / 2) {
+    if (this.model.get('index') == 0){
       this.model.nextIndex();
     } else {
-      this.model.prevIndex();
+      var width = this.el.width();
+      if (e.clientX > width / 2) {
+        this.model.nextIndex();
+      } else {
+        this.model.prevIndex();
+      }
     }
   },
 
@@ -331,4 +338,5 @@ var GalleryInteration = Backbone.View.extend({
   }
 
 });
+
 
