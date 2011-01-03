@@ -5,38 +5,32 @@ var tags = [];
 
 $(function() {
 
-  var loading = new LoadingView();
-  $('#main').append(loading.render().el);
-
+  var gallery = new Gallery;
   var photoList = new PhotoList({
     flickrId: flickrId,
     flickrTags: tags
   });
 
+  new LoadingView({ model: gallery, el: $('#loading') });
+
+  gallery.set({ loaded: false });
+
+  new GalleryLayout({ model: gallery, el: $('#gallery') });
+  new GalleryInteration({ model: gallery, el: $('#gallery') });
+
+  new GalleryController(gallery);
 
   photoList.fetch({
     success: function() {
       var photoSet = photoList.getPhotoSet();
       var loaded = photoSet.length;
 
-      var gallery = new Gallery({
-        photoSet: photoSet
-      });
-
+      gallery.set({ photoSet: photoSet });
 
       photoSet.each(function(photo) {
         photo.fetch({
           success: function() {
-            if (--loaded == 0) {
-
-              new GalleryLayout({ model: gallery, el: $('#image') });
-              new GalleryInteration({ model: gallery, el: $('#image') });
-
-               new GalleryController(gallery);
-              gallery.set({ loaded: true });
-
-              loading.remove();
-            }
+            gallery.set({ loaded: (--loaded == 0)})
           }
         });
       });
@@ -103,7 +97,7 @@ var Photo = Backbone.Model.extend({
 */
 var Gallery = Backbone.Model.extend({
   initialize: function() {
-    this.set({ index: null, loaded: false });
+    this.set({ index: null, loaded: null });
   },
   getPhoto: function() {
     return this.get('photoSet').at(this.get('index'));
@@ -153,12 +147,18 @@ var GalleryController = Backbone.Controller.extend({
 
 var LoadingView = Backbone.View.extend({
 
-  tagName: "div",
-  className: "loading",
+  initialize: function() {
+    _.bindAll(this, 'render');
+    this.model.bind('change:loaded', this.render);
+  },
 
   render: function() {
-    $(this.el).html('Loading...');
-    return this;
+    if (this.model.get('loaded')) {
+      this.el.hide();
+    } else {
+      this.el.text('Loading...');
+      this.el.show();
+    }
   }
 });
 
