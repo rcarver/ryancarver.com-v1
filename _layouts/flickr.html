@@ -19,21 +19,25 @@
   <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom Feed">
 </head>
 <body>
-
-  <div id="container">
-    <header>
-      <h1 class="typeset">Ryan Carver Photography</h1>
-    </header>
+  <div id="wrapper">
+    <div id="header" class="typeset">
+      <h1><a href="/">Photography <span>by</span> Ryan Carver</a></h1>
+    </div>
 
     <div id="main">
       {{ content }}
-      <div id="grid"></div>
-      <div id="single"></div>
+      <div id="image">
+        <script class="template" type="text/x-template">
+          <div class="frame">
+            <div class="single single67">
+              <img src="<%= src %>" width="<%= width %>" height="<%= height %>">
+            </div>
+          </div>
+        </script>
+        <div class="wrapper">
+        </div>
+      </div>
     </div>
-
-    <footer>
-
-    </footer>
   </div>
 
 </body>
