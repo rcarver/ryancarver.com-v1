@@ -5,8 +5,10 @@ var tags = [];
 
 $(function() {
 
-  var gallery = new Gallery;
+  var photoSet = new PhotoSet;
+  var gallery = new Gallery({ photoSet: photoSet });
   var photoList = new PhotoList({
+    photoSet: photoSet,
     flickrId: flickrId,
     flickrTags: tags
   });
@@ -22,15 +24,10 @@ $(function() {
 
   photoList.fetch({
     success: function() {
-      var photoSet = photoList.getPhotoSet();
-      var loaded = photoSet.length;
-
-      gallery.set({ photoSet: photoSet });
-
       photoSet.each(function(photo) {
         photo.fetch({
           success: function() {
-            gallery.set({ loaded: (--loaded == 0)})
+            gallery.loadedOne();
           }
         });
       });
@@ -47,16 +44,20 @@ function paddingForCentering(item, space) {
 }
 
 var PhotoList = Backbone.Model.extend({
+  initialize: function() {
+    _.bindAll(this);
+    this.bind('change', this.updatePhotoSet);
+  },
+
   url: function() {
     return 'http://api.flickr.com/services/feeds/photos_public.gne?id=' + this.get('flickrId')+ '&tags=' + this.get('flickrTags').join(',') + '&format=json&jsoncallback=?';
   },
 
-  getPhotoSet: function() {
-    var photoSet = new PhotoSet;
+  updatePhotoSet: function() {
+    var photoSet = this.get('photoSet');
     _.each(this.get('items'), function(item) {
       photoSet.add(new Photo(item));
     });
-    return photoSet;
   }
 });
 
@@ -97,7 +98,9 @@ var Photo = Backbone.Model.extend({
 */
 var Gallery = Backbone.Model.extend({
   initialize: function() {
-    this.set({ index: null, loaded: null });
+    _.bindAll(this, "addPhoto");
+    this.set({ photos: 0, photosLoaded: 0, index: null, loaded: null });
+    this.get('photoSet').bind('add', this.addPhoto);
   },
   getPhoto: function() {
     return this.get('photoSet').at(this.get('index'));
@@ -112,6 +115,24 @@ var Gallery = Backbone.Model.extend({
       index = 0;
     }
     this.set({ index: index });
+  },
+  addPhoto: function() {
+    this.set({ photos: this.get('photos') + 1 });
+  },
+  loadedOne: function() {
+    this.set({ photosLoaded: this.get('photosLoaded') + 1 });
+    if (this.get('photosLoaded') == this.get('photos')) {
+      this.set({ loaded: true });
+    }
+  },
+  pctLoaded: function() {
+    var photos = this.get('photos');
+    var loaded = this.get('photosLoaded');
+    if (photos == 0) {
+      return 0;
+    } else {
+      return loaded / photos;
+    }
   }
 });
 
@@ -150,13 +171,16 @@ var LoadingView = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, 'render');
     this.model.bind('change:loaded', this.render);
+    this.model.bind('change:photosLoaded', this.render);
   },
 
   render: function() {
     if (this.model.get('loaded')) {
       this.el.hide();
     } else {
-      this.el.text('Loading...');
+      var pct = this.model.pctLoaded();
+      var number = Math.round(pct * 100);
+      this.el.text(number + '% loaded');
       this.el.show();
     }
   }
