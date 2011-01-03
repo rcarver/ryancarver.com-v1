@@ -1,7 +1,8 @@
 // http://api.flickr.com/services/feeds/photos_public.gne
 
 var flickrId = '47882233@N00';
-var tags = [];
+var flickrKey = '3eff5a940d905ad02b98412d701909f3';
+var tags = [''];
 
 $(function() {
 
@@ -10,6 +11,7 @@ $(function() {
   var photoList = new PhotoList({
     photoSet: photoSet,
     flickrId: flickrId,
+    flickrKey: flickrKey,
     flickrTags: tags
   });
 
@@ -50,13 +52,22 @@ var PhotoList = Backbone.Model.extend({
   },
 
   url: function() {
-    return 'http://api.flickr.com/services/feeds/photos_public.gne?id=' + this.get('flickrId')+ '&tags=' + this.get('flickrTags').join(',') + '&format=json&jsoncallback=?';
+    var template = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=<%= api_key %>&user_id=<%= user_id %>&tags=<%= tags.join(",") %>&per_page=20&format=json&jsoncallback=?';
+    //return 'http://api.flickr.com/services/feeds/photos_public.gne?id=' + this.get('flickrId')+ '&tags=' + this.get('flickrTags').join(',') + '&format=json&jsoncallback=?';
+    var url = _.template(template, { user_id: this.get('flickrId'), api_key: this.get('flickrKey'), tags: this.get('flickrTags') });
+    console.log(url);
+    return url;
+  },
+
+  parse: function(response) {
+    console.log(response);
+    return response.photos;
   },
 
   updatePhotoSet: function() {
     var photoSet = this.get('photoSet');
-    _.each(this.get('items'), function(item) {
-      photoSet.add(new Photo(item));
+    _.each(this.get('photo'), function(photo) {
+      photoSet.add(new Photo(photo));
     });
   }
 });
@@ -73,8 +84,8 @@ var PhotoSet = Backbone.Collection.extend({
 */
 var Photo = Backbone.Model.extend({
   initialize: function(attributes) {
-    var extractedId = this.get('link').match(/\/([^\/]+)\/$/)[1];
-    this.set({ id: extractedId });
+    //var extractedId = this.get('link').match(/\/([^\/]+)\/$/)[1];
+    //this.set({ id: extractedId });
   },
 
   url: function() {
@@ -113,6 +124,14 @@ var Gallery = Backbone.Model.extend({
     var index = this.get('index') + 1;
     if (index >= set.length) {
       index = 0;
+    }
+    this.set({ index: index });
+  },
+  prevIndex: function() {
+    var set = this.get('photoSet');
+    var index = this.get('index') - 1;
+    if (index < 0) {
+      index = set.length - 1;
     }
     this.set({ index: index });
   },
@@ -234,7 +253,7 @@ var GalleryLayout = Backbone.View.extend({
 var GalleryInteration = Backbone.View.extend({
 
   events: {
-    'click': "nextPhoto"
+    'click': "changePhoto"
   },
 
   initialize: function() {
@@ -272,8 +291,13 @@ var GalleryInteration = Backbone.View.extend({
     this.animating = false;
   },
 
-  nextPhoto: function(e) {
-    this.model.nextIndex();
+  changePhoto: function(e) {
+    var width = this.el.width();
+    if (e.clientX > width / 2) {
+      this.model.nextIndex();
+    } else {
+      this.model.prevIndex();
+    }
   },
 
   setIndexViaScroll: function() {
