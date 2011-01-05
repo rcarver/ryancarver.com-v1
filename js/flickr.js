@@ -11,7 +11,7 @@ $(function() {
   photoCollection.flickrKey = flickrKey;
   photoCollection.flickrTags = tags;
 
-  var photoLoader = new PhotoLoader({ collection: photoCollection });
+  var photoLoader = new PhotoLoader(photoCollection);
   var gallery = new Gallery({ photoLoader: photoLoader, collection: photoCollection });
 
   new LoadingView({ model: gallery, el: $('#loading') });
@@ -69,41 +69,46 @@ var PhotoCollection = Backbone.Collection.extend({
 });
 
 
-var PhotoLoader = Backbone.Model.extend({
+var PhotoLoader = function(collection) {
+  _.extend(this, Backbone.Events);
+  _.bindAll(this, 'photosAdded', 'photoLoaded');
+  this.collection = collection;
+  this.collection.bind('add', this.addPhoto);
+  this.collection.bind('refresh', this.photosAdded);
+  this.loaded = 0;
+}
 
-  initialize: function() {
-    _.bindAll(this, 'photosAdded', 'photoLoaded');
-    this.set({ loaded: 0 });
-    this.get('collection').bind('refresh', this.photosAdded);
-  },
+PhotoLoader.prototype.photosAdded = function(photo) {
+  var self = this;
+  this.collection.each(function(photo) {
+    self.addPhoto(photo);
+  });
+};
 
-  photosAdded: function(photo) {
-    var self = this;
-    this.get('collection').each(function(photo) {
-      self.set({ added: self.get('added') + 1 });
-      photo.fetch({ success: self.photoLoaded });
-    });
-  },
+PhotoLoader.prototype.addPhoto = function(photo) {
+  this.trigger('photoAdded');
+  photo.fetch({ success: this.photoLoaded });
+}
 
-  photoLoaded: function() {
-    this.set({ loaded: this.get('loaded') + 1 });
-    this.checkIfAllLoaded();
-  },
+PhotoLoader.prototype.photoLoaded = function() {
+  this.loaded++;
+  this.trigger('photoLoaded');
+  this.checkIfAllLoaded();
+};
 
-  checkIfAllLoaded: function() {
-    if (this.get('loaded') == this.get('collection').length) {
-      this.trigger('allPhotosLoaded');
-    }
+PhotoLoader.prototype.checkIfAllLoaded = function() {
+  if (this.loaded == this.collection.length) {
+    this.trigger('allPhotosLoaded');
   }
-})
+};
 
 var Gallery = Backbone.Model.extend({
 
   initialize: function() {
     _.bindAll(this, "addedOne", "loadedOne", "allLoaded");
     this.set({ photos: 0, photosLoaded: 0, index: null, loaded: null });
-    this.get('photoLoader').bind('change:added', this.addedOne);
-    this.get('photoLoader').bind('change:loaded', this.loadedOne);
+    this.get('photoLoader').bind('photoAdded', this.addedOne);
+    this.get('photoLoader').bind('photoLoaded', this.loadedOne);
     this.get('photoLoader').bind('allPhotosLoaded', this.allLoaded);
   },
   nextIndex: function() {
