@@ -1,3 +1,6 @@
 markdown: rdiscount
 permalink: /photos/:year.:month.:day/
 paginate: 8
+exclude:
+  - Gemfile*
+  - Rakefile
