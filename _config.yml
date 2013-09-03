@@ -1,4 +1,3 @@
 markdown: rdiscount
-auto: true
 permalink: /photos/:year.:month.:day/
 paginate: 8
