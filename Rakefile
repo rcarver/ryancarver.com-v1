@@ -17,7 +17,7 @@ end
 
 desc "Run the development server"
 task :server do
-  sh "jekyll serve"
+  sh "jekyll serve --watch"
 end
 
 desc "Create a new post"
