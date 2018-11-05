@@ -6,7 +6,7 @@ DEPLOY_DRY_RUN = ENV['NOSYNC'] ? "--dry-run" : nil
 
 desc "Build the site"
 task :build do
-  sh "jekyll build"
+  sh "bundle exec jekyll build"
 end
 
 desc "Build and then upload the site"
@@ -17,7 +17,7 @@ end
 
 desc "Run the development server"
 task :server do
-  sh "jekyll serve --watch"
+  sh "bundle exec jekyll serve --watch"
 end
 
 desc "Create a new post"
