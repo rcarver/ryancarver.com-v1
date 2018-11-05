@@ -7,3 +7,4 @@ exclude:
   - vendor/*
   - Gemfile*
   - Rakefile
+  - README.md

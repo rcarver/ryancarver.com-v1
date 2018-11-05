@@ -9,10 +9,13 @@ task :build do
   sh "bundle exec jekyll build"
 end
 
-desc "Build and then upload the site"
-task :deploy => [:clean, :build] do
-  sh "s3cmd sync _site/ #{DEPLOY_DRY_RUN} --delete-removed s3://www.ryancarver.com/"
-  #sh "rsync -avz --delete --exclude=projects #{DEPLOY_DRY_RUN} _site/ ryancarver.com:ryancarver.com"
+task :build_prod_archive do
+  sh "bundle exec jekyll build --baseurl=/archives/v1"
+end
+
+desc "Build and then upload the site to the archive"
+task :deploy_prod_archive => [:clean, :build_prod_archive] do
+  sh "s3cmd --config=.s3cfg sync _site/ #{DEPLOY_DRY_RUN} --delete-removed s3://www.ryancarver.com/archives/v1/"
 end
 
 desc "Run the development server"
