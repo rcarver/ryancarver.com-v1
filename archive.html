@@ -1,11 +1,12 @@
 ---
 layout: default
+permalink: archive.html
 ---
 
 <div id="image">
   <div class="grid">
     {% for post in site.posts %}
-      <a class="{{cycle 'a', 'a', 'a', 'a r', 'b', 'b', 'b', 'b r'}}" href="{{post.url}}"><img src="/photos/thumb/{{post.thumb}}" width="240" height="240"></a>
+      <a class="{% cycle 'a', 'a', 'a', 'a r', 'b', 'b', 'b', 'b r' %}" href="{{post.url}}"><img src="/photos/thumb/{{post.thumb}}" width="240" height="240"></a>
     {% endfor %}
   </div>
 </div>
