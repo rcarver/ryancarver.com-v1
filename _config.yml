@@ -1,6 +1,6 @@
 markdown: rdiscount
 permalink: /photos/:year.:month.:day/
-pagination: 8
+paginate: 8
 plugins:
   - jekyll-paginate
 exclude:
